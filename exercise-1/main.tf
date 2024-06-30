@@ -1,24 +1,24 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "exercise-1-paul"
+  name     = "megacorp-exercise-1-paul"
   location = "West Europe"
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "exercise-1-vnet"
+  name                = "megacorp-exercise-1-vnet"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   address_space       = ["10.0.0.0/16"]
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                 = "exercise-1-subnet"
+  name                 = "megacorp-exercise-1-subnet"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.0.0/24"]
 }
 
 resource "azurerm_network_security_group" "public" {
-  name                = "exercise-1-nsg"
+  name                = "megacorp-exercise-1-nsg"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 }
@@ -29,14 +29,14 @@ resource "azurerm_subnet_network_security_group_association" "nsg_subnet" {
 }
 
 resource "azurerm_public_ip" "pip" {
-  name                = "exercise-1-pip"
+  name                = "megacorp-exercise-1-pip"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Dynamic"
 }
 
 resource "azurerm_network_interface" "nic" {
-  name                      = "exercise-1-nic"
+  name                      = "megacorp-exercise-1-nic"
   resource_group_name       = azurerm_resource_group.rg.name
   location                  = azurerm_resource_group.rg.location
 
@@ -55,7 +55,7 @@ resource "random_password" "admin_password" {
 }
 
 resource "azurerm_linux_virtual_machine" "web_server" {
-  name                = "exercise-1-web-server"
+  name                = "megacorp-exercise-1-web-server"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = "Standard_B1s"
@@ -84,7 +84,7 @@ apt-get update
 apt-get install -y apache2
 systemctl start apache2
 systemctl enable apache2
-echo '<html><head><title>My Awesome Web Server</title></head><body style="background-color:#1F778D"><p style="text-align: center;"><span style="color:#FFFFFF;"><span style="font-size:28px;">You did it! Have a &#9749;</span></span></p></body></html>' | sudo tee /var/www/html/index.html
+echo '<html><head><title>MegaCorp Web Server</title></head><body style="background-color:#1F778D"><p style="text-align: center;"><span style="color:#FFFFFF;"><span style="font-size:28px;">You did it! Have a &#9749;</span></span></p></body></html>' | sudo tee /var/www/html/index.html
 EOF
 )
 }
